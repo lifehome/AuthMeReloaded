@@ -267,6 +267,12 @@ public class AuthMe extends JavaPlugin {
             && settings.getProperty(EmailSettings.SMTP_PORT) != 25) {
             ConsoleLogger.warning("Note: You have set Email.useTls to false but this only affects mail over port 25");
         }
+        // Check if argon2 library is present and can be loaded
+        if (hash.equals(HashAlgorithm.ARGON2) && !OnStartupTasks.checkArgon2Presence()) {
+            ConsoleLogger.warning("WARNING!!! You use Argon2 Hash Algorithm method but we can't found any "
+                + "Argon2 library on your system !");
+            stopOrUnload();
+        }
     }
 
     /**
